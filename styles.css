@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(26, 112, 170);
+    color: #FFF;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+
+.genre-column{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.card{
+    width: 200px;
+    height: 120px;
+    border-radius: 20px;
+    background-color:  rgb(41, 150, 223);;
+    border: solid rgb(163, 75, 141) 3px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+}
