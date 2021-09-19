@@ -7,10 +7,31 @@
 const game = document.querySelector('#game');
 const score = document.querySelector('#score');
 
-const anime = 31;
+const genres = [
+    {   
+        name : 'Anime' ,
+        id : 31
+    },
+
+    {
+        name : 'Computers' ,
+        id : 18
+
+    },
+
+    {
+        name : 'Mathematics',
+        id: 19
+    } ,
+    {
+        name: 'Video Games' ,
+        id : 15
+    }
+]
+
 const levels = ['easy' , 'medium' , 'hard'] 
 
-function addGenre() {
+function addGenre(genre) {
    const column = document.createElement('div');
    column.classList.add('genre-column');
     
@@ -32,14 +53,32 @@ function addGenre() {
         }
 
 
-       fetch(`https://opentdb.com/api.php?amount=1&category=31&difficulty={level}&type=boolean`)
+       fetch(`https://opentdb.com/api.php?amount=1&category=${genre.id}&difficulty=${level}&type=boolean`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-            //    // card.setAttribute('data-question' , data.results[0].question)
-            //     cards.setAttribute('data-answer' ,data.results[0].correct_answer)
-            //     card.setAttribute('data-value', card.getInnerHTML())
+                card.setAttribute('data-question' , data.results[0].question)
+                card.setAttribute('data-answer' ,data.results[0].correct_answer)
+                card.setAttribute('data-value', card.getInnerHTML())
             })
+        
+            card.addEventListener('click' , flipCard)
    })
 }
-addGenre()
+genres.forEach(genre => addGenre(genre))
+
+function flipCard(){
+    console.log('clicked')
+    const textDisplay = document.createElement('div');
+    const trueButton = document.createElement('button');
+    const falseButton = document.createElement('button');
+    trueButton.innerHTML = 'True' ;
+    falseButton.innerHTML = 'False';
+    trueButton.addEventListener('click' , getResult)
+    falseButton.addEventListener('click' , getResult)
+    textDisplay.innerHTML = this.getAttribute('data-question')
+    this.append(textDisplay , trueButton , falseButton);
+
+    const allCards = Array.from(document.querySelectorAll('.card'));
+    allCards.forEach(card => removeEventListener('click' , flipCard))
+}

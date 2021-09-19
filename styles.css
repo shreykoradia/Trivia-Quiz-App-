@@ -28,3 +28,7 @@ body{
     padding: 5px;
     margin: 10px;
 }
+
+#game{
+    display:  flex;
+}
