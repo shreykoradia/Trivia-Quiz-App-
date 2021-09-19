@@ -5,7 +5,8 @@
 
 
 const game = document.querySelector('#game');
-const score = document.querySelector('#score');
+const scoreDisplay = document.querySelector('#score');
+let score = 0;
 
 const genres = [
     {   
@@ -34,7 +35,7 @@ const levels = ['easy' , 'medium' , 'hard']
 function addGenre(genre) {
    const column = document.createElement('div');
    column.classList.add('genre-column');
-    
+   column.innerHTML = genre.name
    game.append(column)
     
    levels.forEach(level =>{
@@ -61,8 +62,9 @@ function addGenre(genre) {
                 card.setAttribute('data-answer' ,data.results[0].correct_answer)
                 card.setAttribute('data-value', card.getInnerHTML())
             })
+            .then(done =>card.addEventListener('click' , flipCard))
         
-            card.addEventListener('click' , flipCard)
+            
    })
 }
 genres.forEach(genre => addGenre(genre))
@@ -75,10 +77,40 @@ function flipCard(){
     trueButton.innerHTML = 'True' ;
     falseButton.innerHTML = 'False';
     trueButton.addEventListener('click' , getResult)
+    trueButton.classList.add('true-button');
     falseButton.addEventListener('click' , getResult)
+    falseButton.classList.add('false-button');
     textDisplay.innerHTML = this.getAttribute('data-question')
     this.append(textDisplay , trueButton , falseButton);
 
     const allCards = Array.from(document.querySelectorAll('.card'));
-    allCards.forEach(card => removeEventListener('click' , flipCard))
+    allCards.forEach(card => card.removeEventListener('click' , flipCard))
+}
+
+function getResult(){
+    const allCards = Array.from(document.querySelectorAll('.card'))
+    allCards.forEach(card=>card.addEventListener('click', flipCard)) 
+
+    const cardOfButton  = this.parentElement
+    if(cardOfButton.getAttribute('data-answer')=== this.innerHTML){
+        score = score + parseInt(cardOfButton.getAttribute('data-value'))
+        scoreDisplay.innerHTML = score;
+        cardOfButton.classList.add('correct-answer')
+        setTimeout(()=>{
+            while(cardOfButton.firstChild){
+                cardOfButton.removeChild(cardOfButton.lastChild)
+            }
+            cardOfButton.innerHTML = cardOfButton.getAttribute('data-value')
+        },200)
+   } else{
+         cardOfButton.classList.add('wrong-anwer')
+         setTimeout(()=>{
+            while(cardOfButton.firstChild){
+                cardOfButton.removeChild(cardOfButton.lastChild)
+            }
+            cardOfButton.innerHTML = 0;
+        },200)
+
+    }
+    cardOfButton.removeEventListener('click' ,  flipCard)
 }

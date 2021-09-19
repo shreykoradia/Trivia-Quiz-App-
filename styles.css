@@ -32,3 +32,23 @@ body{
 #game{
     display:  flex;
 }
+
+.correct-answer{
+    background-color: rgb(163, 75, 141) ;
+}
+.true-button{
+    outline: none;
+    background-color: rgb(93, 240, 93);
+    margin: 1px;
+    border: none;
+}
+.false-button{
+    outline: none;
+    background-color: rgb(247, 110, 110);
+    border: none;
+}
+
+.footer{
+    text-align: center;
+  
+}
